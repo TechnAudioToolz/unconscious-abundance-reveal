@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unconscious Abundance Reveal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Unconscious Abundance Reveal</h1>
+      <p class="sub">Speak your answer. Hear it backwards. Read what your unconscious mind has to say.</p>
+    </header>
+
+    <section class="card" id="prompt-card">
+      <p class="step" id="prompt-step"></p>
+      <h2 id="prompt-text"></h2>
+      <div class="nav">
+        <button id="prev" class="ghost">&larr; Previous</button>
+        <button id="next" class="ghost">Next &rarr;</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="controls">
+        <button id="record">● Record</button>
+        <button id="stop" disabled>■ Stop</button>
+      </div>
+      <p class="status" id="status">Press Record and answer the prompt out loud.</p>
+    </section>
+
+    <section class="card hidden" id="results">
+      <h3>Your answer (forward)</h3>
+      <audio id="forward-audio" controls></audio>
+      <p class="transcript" id="forward-text"></p>
+
+      <h3>Reversed &mdash; guidance from the unconscious</h3>
+      <audio id="reverse-audio" controls></audio>
+      <p class="transcript reveal" id="reverse-text"></p>
+      <a id="download" class="ghost" download="reversed.wav">Download reversed audio</a>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
