@@ -10,6 +10,19 @@ Everything runs on your Mac. Nothing is uploaded, and the app can't go online at
 
 ![The main window](docs/screenshots/main.png)
 
+## Download
+
+**[Unconscious Abundance Reveal (offline).dmg](https://github.com/TechnAudioToolz/unconscious-abundance-reveal/releases/latest)**:
+the whole app, under 1 MB. It needs no internet connection, ever: recording, reversing and speech
+recognition all use what comes with macOS.
+
+1. Open the DMG and drag Unconscious Abundance Reveal onto Applications.
+2. The first time, macOS may say it can't check the app (it's free and not registered with Apple):
+   System Settings > Privacy and Security > scroll down > **Open Anyway**. Only once.
+3. If the app says the speech model isn't installed, turn on **Dictation** in System Settings > Keyboard.
+
+Needs macOS 14 Sonoma or newer on Apple Silicon (M1 or later).
+
 - **Guided prompts.** Five questions about abundance, answered one at a time. Each shows whether it's been
   answered and what it revealed.
 - **Reversed and revealed.** The recording is flipped sample for sample, played back, and turned into words.
@@ -97,7 +110,8 @@ Privacy comes first. This is enforced by macOS itself, not just promised:
 
 ```bash
 cd app
-./build.sh --open
+./build.sh --open            # the app
+./make_offline_dmg.sh        # the DMG to share
 ```
 
 Then drag `app/build/Unconscious Abundance Reveal.app` to Applications. Redraw the icon with
