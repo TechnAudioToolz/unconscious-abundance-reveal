@@ -1,2 +1,18 @@
 .DS_Store
+
+# Mac app build output
+app/.build/
+app/build/
+app/.swiftpm/
+
+# recordings never go in the repo
+*.caf
+*.m4a
 *.wav
+*.mp3
+*.aiff
+*.png
+
+# app assets are images too, but belong in the repo
+!app/Resources/*.png
+!docs/screenshots/*.png

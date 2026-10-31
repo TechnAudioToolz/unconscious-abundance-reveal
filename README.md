@@ -1,34 +1,65 @@
 # Unconscious Abundance Reveal
 
-A browser app that records your spoken answer to a guided prompt, plays it **backwards**, and transcribes the reversed audio to reveal guidance from the unconscious mind.
+<img src="app/Resources/AppIcon.png" width="128" align="right" alt="Unconscious Abundance Reveal icon">
 
-## How it works
+A Mac app that records your spoken answer to a guided prompt, plays it **backwards**, and transcribes the
+reversed recording to reveal guidance from the unconscious mind. Choose a prompt, press **Record**, answer out
+loud, and press **Stop**: the reversed answer plays and the words hidden in it appear.
 
-1. A prompt is shown (e.g. *"What is blocking abundance from flowing into my life right now?"*).
-2. Press **Record** and answer out loud, then press **Stop**.
-3. The app reverses the recording and plays it back.
-4. The reversed audio is transcribed — the words that surface are your hidden guidance. The forward transcript is shown too, for comparison.
+Everything runs on your Mac. Nothing is uploaded, and the app can't go online at all.
 
-Everything runs locally in your browser. Audio never leaves your device; speech-to-text uses [Whisper](https://huggingface.co/Xenova/whisper-base.en) via [Transformers.js](https://huggingface.co/docs/transformers.js). The model (~75 MB) downloads once on first use and is cached.
+![The main window](docs/screenshots/main.png)
 
-## Run it
+- **Guided prompts.** Five questions about abundance, answered one at a time. Each shows whether it's been
+  answered and what it revealed.
+- **Reversed and revealed.** The recording is flipped sample for sample, played back, and turned into words.
+  What you said forwards is shown underneath, to compare.
+- **Visible while recording.** A red recording box with the time and a microphone level meter.
+- **Play** either direction again, or **save** a copy of the forward or reversed audio where you choose.
+- **Toolbar:** record, play reversed, the answers folder, settings and donate.
 
-Microphone access needs `localhost` or HTTPS, so serve the folder rather than opening the file directly:
+## Privacy
+
+Privacy comes first. This is enforced by macOS itself, not just promised:
+
+- **No network access.** The app runs in Apple's App Sandbox *without* the network entitlement
+  ([`UnconsciousReveal.entitlements`](app/Resources/UnconsciousReveal.entitlements)), so macOS refuses any
+  connection it tries to make. Check it yourself:
+  ```bash
+  codesign -d --entitlements - "app/build/Unconscious Abundance Reveal.app"
+  ```
+- **No telemetry.** No analytics, crash reporting or update checks, and no third-party code at all: the app
+  uses only what comes with macOS.
+- **On-device speech recognition only.** Transcription uses the speech model built into macOS with
+  `requiresOnDeviceRecognition`, so it fails rather than send audio to Apple's servers.
+- **Answers are deleted when the app quits**, unless you turn on *Keep answers* in Settings. Until then they
+  live only inside the app's private container:
+  `~/Library/Containers/com.technaudiotoolz.unconsciousreveal/Data/Library/Application Support/Answers`.
+
+## Needs
+
+- macOS 14 or newer on Apple Silicon.
+- The on-device speech model: turn on **Dictation** in System Settings > Keyboard and macOS downloads it.
+  Settings in the app says whether it's installed.
+- The first time you record, macOS asks for **Microphone** and **Speech Recognition** permission.
+
+## Build
 
 ```bash
-python3 -m http.server 8000
+cd app
+./build.sh --open
 ```
 
-Then open http://localhost:8000.
+Then drag `app/build/Unconscious Abundance Reveal.app` to Applications. Redraw the icon with
+`swift make_icon.swift`.
 
-It also works as-is on GitHub Pages (Settings → Pages → deploy from `main`).
+The app is signed on your own Mac without an Apple Developer account, so macOS asks again for the microphone
+after each new build (unless you make an "Unconscious Reveal Dev" code-signing certificate).
 
-## Customize the prompts
+## Change the prompts
 
-Edit the `PROMPTS` array at the top of [`app.js`](app.js).
+Edit the list in [`Prompts.swift`](app/Sources/UnconsciousReveal/Prompts.swift).
 
-## Files
+## License
 
-- `index.html` — page layout
-- `style.css` — styling
-- `app.js` — recording, reversal, WAV export, and transcription
+MIT.
